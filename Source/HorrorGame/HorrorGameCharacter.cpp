@@ -10,6 +10,7 @@
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
 #include "Engine/LocalPlayer.h"
+#include "Engine/TextureRenderTarget.h"
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
@@ -39,6 +40,17 @@ AHorrorGameCharacter::AHorrorGameCharacter()
 	//Mesh1P->SetRelativeRotation(FRotator(0.9f, -19.19f, 5.2f));
 	Mesh1P->SetRelativeLocation(FVector(-30.f, 0.f, -150.f));
 
+
+	FlashlLight = CreateDefaultSubobject<USpotLightComponent>(TEXT("FlashlLight"));
+	FlashlLight->SetRelativeLocation(FVector(-9.5f, 4.0f, 169.0f));
+	FlashlLight->Intensity = 20.0f;
+	FlashlLight->AttenuationRadius = 1500.0f;
+	FlashlLight->InnerConeAngle = 5.0f;
+	FlashlLight->OuterConeAngle = 30.0f;
+	FlashlLight->SetupAttachment(Mesh1P);
+
+	FlashLightComponent = CreateDefaultSubobject<UFlashLightComponent>(TEXT("FlashLightComponent"));
+	FlashLightComponent->SetFlashLigth(FlashlLight);
 }
 
 void AHorrorGameCharacter::BeginPlay()

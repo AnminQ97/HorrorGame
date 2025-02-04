@@ -6,6 +6,7 @@ AHorrorObject::AHorrorObject()
 {
 	PrimaryActorTick.bCanEverTick = true;
 
+	currentState = HorrorObjectState::Idle;
 }
 
 void AHorrorObject::StartEvent()
