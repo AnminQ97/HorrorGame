@@ -8,7 +8,7 @@ enum class HorrorObjectState : uint8
 {
 	Idle,
 	Active,
-	Done
+	Finished
 };
 
 UCLASS()
@@ -19,14 +19,18 @@ class HORRORGAME_API AHorrorObject : public AActor
 public:	
 	AHorrorObject();
 
-	virtual void StartEvent();
-protected:
 	virtual void BeginPlay() override;
+	
+protected:
+	virtual void StartEvent();
+	
+	void PlaySound();
 
-	virtual void PlaySound();
 public:
 	UPROPERTY(BlueprintReadWrite,EditAnywhere)
 	TObjectPtr<USoundWave> SoundWave;
 
+protected:
 	HorrorObjectState currentState;
+	
 };

@@ -9,6 +9,9 @@ void AHorrorObjectTrigger::OnBeginOverlap(AActor* overlappedComponent, AActor* o
 {
 	if (otherActor && otherActor != this)
 	{
-		HorrorObject->StartEvent();
+		if (HorrorObject != nullptr)
+		{
+			HorrorObject->StartEvent();
+		}
 	}
 }

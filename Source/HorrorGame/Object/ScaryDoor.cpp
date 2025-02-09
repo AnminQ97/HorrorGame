@@ -38,9 +38,6 @@ void AScaryDoor::StartEvent()
 
 void AScaryDoor::Tick(float DeltaSeconds)
 {
-	if (!bIsEvent)
-		return;
-	
 	Super::Tick(DeltaSeconds);
 
 	OpeningTimeline.TickTimeline(DeltaSeconds);
@@ -55,6 +52,6 @@ void AScaryDoor::OpenDoor(float timeline)
 	{
 		OpeningTimeline.Stop();
 		bIsEvent = false;
-		currentState = HorrorObjectState::Done;
+		currentState = HorrorObjectState::Finished;
 	}
 }

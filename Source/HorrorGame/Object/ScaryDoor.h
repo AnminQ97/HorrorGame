@@ -22,8 +22,10 @@ private:
 public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	TObjectPtr<USceneComponent> DefaultComponent;
+	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	TObjectPtr<UStaticMeshComponent> Door;
+	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	UCurveFloat* DoorCurve;
 

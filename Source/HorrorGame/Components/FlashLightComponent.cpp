@@ -3,31 +3,36 @@
 UFlashLightComponent::UFlashLightComponent()
 {
 	PrimaryComponentTick.bCanEverTick = true;
+}
 
-	BlinkTimeline = CreateDefaultSubobject<UTimelineComponent>(TEXT("TimelineComponent"));
-
-	InterpFloat.BindUFunction(this, FName("OnBlinkingLight"));
+void UFlashLightComponent::OnBlinkLightEvent()
+{
+	BlinkLightTimeline.Play();
+	
 }
 
 void UFlashLightComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	BlinkTimeline->SetLooping(false);
-	BlinkTimeline->AddInterpFloat(BlinkLigthCurve, InterpFloat);
-	BlinkTimeline->SetTimelineLength(TimelineLength);
+	if (BlinkLigthCurve)
+	{
+		FOnTimelineFloat progress;
+		progress.BindDynamic(this, &UFlashLightComponent::BlinkingLight);
+		BlinkLightTimeline.AddInterpFloat(BlinkLigthCurve, progress);
+	}
 
-	BlinkTimeline->PlayFromStart();
+	LightIntensity = FlashLight->Intensity;
 }
-
 
 void UFlashLightComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+
+	BlinkLightTimeline.TickTimeline(DeltaTime);
 }
 
-void UFlashLightComponent::OnBlinkingLight(float intensity)
+void UFlashLightComponent::BlinkingLight(float intensity)
 {
-	FlashLight->Intensity = intensity;
+	FlashLight->SetIntensity(LightIntensity * intensity);
 }
-
